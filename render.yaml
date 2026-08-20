@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: xoptime-whatsapp-bot
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: INTERNAL_SECRET
+        generateValue: true   # yehi value admin service ke WHATSAPP_BOT_INTERNAL_KEY me daalo
+      - key: DATABASE_URL
+        sync: false            # yahan same Neon connection string paste karo jo admin_app.py use karta hai
+      - key: PORT
+        value: "4000"
+
+# NOTE (updated):
+# - Session ab Postgres (Neon) mein store hota hai (pg-auth-state.js), disk
+#   pe nahi. Isliye "disk:" block ki zaroorat nahi rahi -- Render FREE plan
+#   pe bhi restart/redeploy/auto-sleep ke baad session persist rahega, QR
+#   dobara scan nahi karna padega (jab tak WhatsApp se khud logout na karo).
+# - DATABASE_URL yahan wahi Neon connection string honi chahiye jo Xoptime
+#   admin app (admin_app.py) mein hai -- dono ek hi DB use karte hain,
+#   session ek naya table "whatsapp_auth_state" mein store hota hai.
+# - Baileys Puppeteer/Chromium use NAHI karta, isliye RAM requirement
+#   bahut kam hai -- free/512MB instance pe stable chalega.
+# - Deploy hone ke baad admin panel me is service ka public URL +
+#   INTERNAL_SECRET set karo (WHATSAPP_BOT_URL, WHATSAPP_BOT_INTERNAL_KEY).
