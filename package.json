@@ -1,0 +1,17 @@
+{
+  "name": "xoptime-whatsapp-bot",
+  "version": "2.0.0",
+  "description": "Internal WhatsApp OTP bot microservice for Xoptime admin panel (Baileys-based)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "6.7.24",
+    "express": "^4.19.2",
+    "pg": "^8.23.0",
+    "pino": "^9.4.0",
+    "qrcode": "^1.5.4"
+  }
+}
